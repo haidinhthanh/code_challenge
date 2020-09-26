@@ -20,3 +20,37 @@
 2020-09-26 13:07:55,898|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.002991914749145508
 2020-09-26 13:07:55,901|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0029947757720947266
 2020-09-26 13:08:26,308|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,927|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,930|INFO|                   logUtils.py|                                __init__|  16| init logger success!
+2020-09-26 13:45:26,931|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,931|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,938|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.005980730056762695
+2020-09-26 13:45:26,938|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.005980730056762695
+2020-09-26 13:45:26,942|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.002994060516357422
+2020-09-26 13:45:26,942|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.002994060516357422
+2020-09-26 13:45:26,959|INFO|                   logUtils.py|                                __init__|  16| init logger success!
+2020-09-26 13:45:26,959|INFO|                   logUtils.py|                                __init__|  16| init logger success!
+2020-09-26 13:45:26,961|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,961|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,961|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,965|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.002991914749145508
+2020-09-26 13:45:26,965|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.002991914749145508
+2020-09-26 13:45:26,965|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.002991914749145508
+2020-09-26 13:45:26,967|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0009970664978027344
+2020-09-26 13:45:26,967|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0009970664978027344
+2020-09-26 13:45:26,967|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0009970664978027344
+2020-09-26 13:45:26,975|INFO|                   logUtils.py|                                __init__|  16| init logger success!
+2020-09-26 13:45:26,975|INFO|                   logUtils.py|                                __init__|  16| init logger success!
+2020-09-26 13:45:26,975|INFO|                   logUtils.py|                                __init__|  16| init logger success!
+2020-09-26 13:45:26,976|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,976|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,976|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,976|INFO|                   logUtils.py|                                init_log|  46| init logger success!
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                pre_process_before_count|  25| duration pre process before count: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0
+2020-09-26 13:45:26,978|INFO|               word_counter.py|                              word_count|  38| duration count dictionary: 0.0
