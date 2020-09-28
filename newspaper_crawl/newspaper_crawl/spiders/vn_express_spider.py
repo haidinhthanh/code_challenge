@@ -1,76 +1,52 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from newspaper_crawl.items import NewspaperItem
-from newspaper_crawl.constant.xpath import domain_news_xpath
+from newspaper_crawl.constant.xpath import domain_news_xpath, news_fields
+from newspaper_crawl.utils.urlUtils import get_urls_from_file_by_date
+from datetime import datetime, date
+import re
 
 
 class VnExpressSpider(scrapy.Spider):
     name = 'vn_express_spider'
     allowed_domains = ['vnexpress.net']
-    start_urls = ['https://vnexpress.net/mcgregor-len-lich-thuong-dai-voi-pacquiao-4167759.html']
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.start_urls = get_urls_from_file_by_date(self.allowed_domains[0], str(date.today().strftime("%Y_%m_%d")))
+        self.pipelines = ["NewsDataPipeline"]
 
     def parse(self, response):
         item = ItemLoader(item=NewspaperItem(), response=response)
-        domain_xpath = domain_news_xpath[self.allowed_domains[0]]
-        category_xpath = domain_xpath["the thao"]
+        category_xpath = domain_news_xpath[self.allowed_domains[0]]
         url = str(response.url)
 
-        published_time = ""
-        title = ""
-        headline = ""
-        content = ""
-        source = ""
-        category = ""
-        author = ""
+        for field in news_fields:
+            value = ""
+            if field not in ["url", "published_time"]:
+                for xpath in category_xpath[field]:
+                    if xpath and field in ["content"]:
+                        value = "\n ".join(response.xpath(xpath).getall())
+                    elif xpath:
+                        value = response.xpath(xpath).get()
+                    if value:
+                        break
+            elif field == "url":
+                value = url
+            elif field == "published_time":
+                for xpath in category_xpath["published_time_display"]:
+                    value = response.xpath(xpath).get()
+                    if value:
+                        break
+                time_patterns = category_xpath["time_pattern"]
+                for pattern in time_patterns:
+                    matches = re.findall(pattern["pattern"], value)
+                    if matches:
+                        news_date = matches[0][pattern["date"]]
+                        news_time = matches[0][pattern["time"]] + ":00"
+                        datetime_object = datetime.strptime(news_date + " " + news_time, '%d/%m/%Y %H:%M:%S')
+                        value = datetime_object.isoformat()
+                        break
+            item.add_value(field, value)
 
-        for xpath in category_xpath["published_time"]:
-            if xpath:
-                published_time = response.xpath(xpath).get()
-                if published_time:
-                    break
-        for xpath in category_xpath["title"]:
-            if xpath:
-                title = response.xpath(xpath).get()
-                if title:
-                    break
-        for xpath in category_xpath["headline"]:
-            if xpath:
-                headline = response.xpath(xpath).get()
-                if headline:
-                    break
-        for xpath in category_xpath["content"]:
-            if xpath:
-                content = response.xpath(xpath).getall()
-                if content:
-                    break
-        for xpath in category_xpath["source"]:
-            if xpath:
-                source = response.xpath(xpath).get()
-                if source:
-                    break
-        for xpath in category_xpath["author"]:
-            if xpath:
-                author = response.xpath(xpath).get()
-                if author:
-                    break
-        for xpath in category_xpath["category"]:
-            if xpath:
-                category = xpath
-
-        item.add_value("url", url)
-        item.add_value("published_time", published_time)
-        item.add_value("title", title)
-        item.add_value("headline", headline)
-        item.add_value("content", "\n ".join(content))
-        item.add_value("source", source)
-        item.add_value("author", author)
-        item.add_value("category", category)
-        print("url", url)
-        print("published_time", published_time)
-        print("title", title)
-        print("headline", headline)
-        print("content", content)
-        print("source", source)
-        print("author", author)
-        print("category", category)
-        pass
+        yield item.load_item()

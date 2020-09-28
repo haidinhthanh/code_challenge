@@ -1,5 +1,5 @@
 import scrapy
-from scrapy.loader.processors import Join, MapCompose, TakeFirst, Identity
+from itemloaders.processors import MapCompose, Join
 
 
 def strip_space(value):
@@ -37,6 +37,15 @@ class NewspaperItem(scrapy.Item):
     )
     headline = scrapy.Field(
         input_processor=MapCompose(strip_space),
-        output_processor=Join(),
+        output_processor=Join()
     )
     indexed_date = scrapy.Field()
+    published_time_display = scrapy.Field(
+        input_processor=MapCompose(strip_space),
+        output_processor=Join()
+    )
+
+
+class UrlItem(scrapy.Item):
+    urls = scrapy.Field()
+    save_path = scrapy.Field()

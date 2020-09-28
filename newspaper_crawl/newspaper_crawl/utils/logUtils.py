@@ -2,11 +2,10 @@ import logging
 from logging import handlers
 import datetime
 import os
-from os import path
-import sys
 """
 @Desc: Ham ghi log
 """
+from os import path
 
 
 class LogAction(object):
@@ -28,7 +27,7 @@ class LogAction(object):
     def error(self, msg):
         self.logger.error(msg)
 
-    def init_log(self, level=logging.INFO, path_folder_logs="../log/"):
+    def init_log(self, level=logging.INFO, path_folder_logs="../logs/"):
         formatter = logging.Formatter(
             '%(asctime)s|%(levelname)s|%(filename)30s|%(funcName)40s| %(lineno)3d| %(message)s'
         )
@@ -47,3 +46,4 @@ class LogAction(object):
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
         return self.logger
+

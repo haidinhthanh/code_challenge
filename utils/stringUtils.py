@@ -1,5 +1,7 @@
 import re
 from copy import deepcopy
+import hashlib
+from datetime import date
 
 date_patterns = [
     {"pattern": r'\s\d{1,2}[-/]\d{1,2}[-/]\d{4}\s', "name": "fullDate"},
@@ -134,4 +136,20 @@ def convert_entity_in_sen_to_normal(text, match_objects):
             break
     return remove_extra_space(clone_text)
 
-#
+
+def create_item_id(text):
+    return hashlib.md5(str(text).encode('utf-8')).hexdigest()
+
+
+def get_domain(url):
+    res = re.findall(r'http[s]*?://([A-Za-z_0-9.-]+).*', url)
+    if res:
+        return res[0]
+    else:
+        return None
+
+
+def gen_index_name_from_domain(domain):
+    today = date.today()
+    today_date = today.strftime("%Y_%m_%d")
+    return domain + "_" + str(today_date)

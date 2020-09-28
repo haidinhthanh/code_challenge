@@ -62,9 +62,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'newspaper_crawl.pipelines.NewspaperCrawlPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'newspaper_crawl.pipelines.NewspaperCrawlPipeline': 8124,
+   'newspaper_crawl.pipelines.UrlPipeline': 8125
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -86,3 +87,7 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+ELASTIC_SEARCH_SERVER = '127.0.0.1'
+ELASTIC_SEARCH_PORT = 9200
