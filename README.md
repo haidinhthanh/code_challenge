@@ -31,19 +31,19 @@
     
 # runing task
 
-    ** 1.task 1: word counter **
+    **1.task 1: word counter**
         Run flow command:
         Count word from file
             -   python3 bin/word_counter.py -p path -t type
-            * path: absolute file path *
-            * type: type sort asc|desc
+            path: absolute file path
+            type: type sort asc|desc
 
         Test count word
             -   python3 -m unittest bin/word_counter_test.py
 
-    ** 2.task 2: **
+    **2.task 2:**
 
-        * 2.1 crawler news from vnexpress *
+        *2.1 crawler news from vnexpress*
 
         Setup elastic search:
         Run flow command:
@@ -56,13 +56,13 @@
         kill:
             -   pkill -F pid
 
-        * 2.2 Crawl newspaper *
+        *2.2 Crawl newspaper*
             Run flow command:
                 -   cd newspaper_crawl:
                 -   scrapy crawl vn_express_url_crawler
                 -   scrapy crawl vn_express_spider
 
-        * 2.3 flask server *
+        *2.3 flask server*
             -   cd bin
             -   flask run
     
