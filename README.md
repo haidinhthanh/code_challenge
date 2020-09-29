@@ -1,8 +1,8 @@
-#project link 
+# project link
 
 - https://github.com/haidinhthanh/code_challenge.git
 
-#setup enviroment:
+# setup enviroment:
 
 1.linux:
 Run flow command:
@@ -29,7 +29,7 @@ Run flow command:
     
 
     
-#runing task
+# runing task
 
 1.task 1: word counter
 Run flow command:
@@ -64,7 +64,6 @@ Run flow command:
 
 2.2 flask server
     -   cd bin
-
     -   flask run
     
     
