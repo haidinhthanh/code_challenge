@@ -2,6 +2,11 @@ from datetime import datetime
 
 
 def get_instance_time_iso_format():
+    """
+    Get instance string of date with iso format
+    :return: str
+        String date iso format
+    """
     dt_now = datetime.now()
     dt_utc_now = datetime.utcnow()
     delta = dt_now - dt_utc_now

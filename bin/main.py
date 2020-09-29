@@ -1,13 +1,16 @@
+import sys
+import os
 import configparser
-from utils.logUtils import LogAction
 from flask import Flask, jsonify, request
+import re
 import dateutil.parser
 from elasticsearch import Elasticsearch, ElasticsearchException, ConnectionError, ConnectionTimeout, NotFoundError
+sys.path.append(os.path.dirname('../'))
+from utils.logUtils import LogAction
 from constant.constant import indices_pattern, news_fields
 from utils.stringUtils import remove_extra_space, create_item_id, get_domain, gen_index_name_from_domain
 from utils.dateUtils import get_instance_time_iso_format
 from utils.elasticUtils import *
-import re
 
 config = configparser.RawConfigParser()
 config.read('config.properties')

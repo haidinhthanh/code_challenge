@@ -24,6 +24,5 @@ def create_item_id(text):
 def get_time_from_string_by_pattern(text):
     pattern = r"(\d{1,2}/\d{1,2}/\d{4}), (\d{1,2}:\d{1,2})"
     matches = re.findall(pattern, text)
-    print(matches)
 
 get_time_from_string_by_pattern(" hứ hai, 28/9/2020, 00:00 ")

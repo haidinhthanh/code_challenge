@@ -53,6 +53,9 @@ class NewspaperCrawlPipeline:
 
 class UrlPipeline:
 
+    def __init__(self):
+        pass
+
     def process_item(self, item, spider):
         if "NewsUrlPipeline" in getattr(spider, 'pipelines', []):
             file_name = str(date.today().strftime("%Y_%m_%d")) + ".txt"

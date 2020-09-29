@@ -1,10 +1,29 @@
 def is_index_exist_in_elastic(elastic, index):
+    """
+    check if index is exist in cluster elastic
+    :param elastic: elastic client object
+        Elastic search client object
+    :param index: str
+        Name of index
+    :return: bool
+        True if exist index else False
+    """
     if elastic.indices.exists(index=index):
         return True
     return False
 
 
 def create_index_in_elastic(elastic, index):
+    """
+    Create new index in elastic search
+    :param elastic: elastic client object
+        Elastic search client object
+    :param index: str
+        Name of index
+    :return: tuple (bool, result)
+        bool: result create index
+        result: dict detail result create index
+    """
     result = elastic.indices.create(index=index, ignore=400)
     if result and result["acknowledged"]:
         return True, result
@@ -13,6 +32,16 @@ def create_index_in_elastic(elastic, index):
 
 
 def mapping_to_index_in_elastic(elastic, index):
+    """
+    Create mapping for index
+    :param elastic: elastic client object
+        Elastic search client object
+    :param index: str
+        Name of index
+    :return: tuple (bool, result)
+        bool: result mapping index
+        result: dict detail result mapping index
+    """
     mapping = {
         "settings": {
             "analysis": {
@@ -85,12 +114,23 @@ def mapping_to_index_in_elastic(elastic, index):
 
 
 def setting_max_result_search_index(elastic, index, max_result):
+    """
+    Set max result hits return when search in specific index
+    :param elastic: elastic client object
+        Elastic search client object
+    :param index: str
+        Name of index
+    :param max_result: int
+        Number of max hits
+    :return: dict
+        Result of setting max hits return
+    """
     body = {
         "index": {
             "max_result_window": max_result
         }
     }
-    elastic.indices.put_settings(index=index,
-                                 body=body)
 
-
+    result = elastic.indices.put_settings(index=index,
+                                          body=body)
+    return result

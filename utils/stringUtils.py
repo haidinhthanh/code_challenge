@@ -16,22 +16,33 @@ url_patterns = [
 
 def remove_extra_space(text):
     """
-
-    :param text:
-    :return:
+    Remove duplicate extra space between word
+    :param text: str
+        Input text content
+    :return: str
+        Striped text
     """
     return " ".join(str(text).strip().split())
 
 
 def lower_sentence(text):
+    """
+    Lower character in text input
+    :param text: str
+        Input text content
+    :return: str
+        Text with lower character
+    """
     return str(text).lower()
 
 
 def add_space_to_unwanted_char(text):
     """
-        Add extra space around unwanted characters in the text
-    :param text:
-    :return:
+    Add extra space around unwanted characters in the text
+    :param text: str
+        Input text content
+    :return: str
+        Text with space between word and special character
     """
     text = re.sub(r'\n', ' ', text)
     matches = re.findall(r'[{}@_*>()\\#%+=\[\],.":;$^]', text)
@@ -43,21 +54,33 @@ def add_space_to_unwanted_char(text):
 
 def replace_text_by_index(start_index, end_index, text, new_value):
     """
-
-    :param start_index:
-    :param end_index:
-    :param text:
-    :param new_value:
+    Replace text from specific index
+    :param start_index: int
+        Start replace index
+    :param end_index: int
+        End replace index
+    :param text: str
+        Input text
+    :param new_value: str
+        Replace value
     :return:
+        Text with replace value
     """
     return text[:start_index] + new_value + text[end_index:]
 
 
 def find_date_entity_by_pattern(text):
     """
-        Find time in sentence
-    :param text: input text
-    :return:
+        Find time entity in sentence
+    :param text: str
+        input text
+    :return: tuple (match_objects, replace_text)
+        match_objects : dict {entity_type, value, index}
+            entity_type: name of type entity
+            value: value of entity
+            index: index of entity in sentence by type entity
+        replace_text: str
+            text with entity value replace with entity name
     """
     matches = re.findall(r'[{}@_*>()\\#%+=\[\],.]', text)
     for match in matches:
@@ -88,9 +111,16 @@ def find_date_entity_by_pattern(text):
 
 def find_url_entity_by_pattern(text):
     """
-
-    :param text:
-    :return:
+    Find url entity in sentence
+    :param text: str
+        input text
+    :return: tuple (match_objects, replace_text)
+        match_objects : dict {entity_type, value, index}
+            entity_type: name of type entity
+            value: value of entity
+            index: index of entity in sentence by type entity
+        replace_text: str
+            text with entity value replace with entity name
     """
     clone_text = remove_extra_space(text)
     match_objects = list()
@@ -118,11 +148,15 @@ def find_url_entity_by_pattern(text):
 
 def convert_entity_in_sen_to_normal(text, match_objects):
     """
-
-    :param match_objects:
-    :param text:
-    :param entity_type:
-    :return:
+    convert sentence with entity back to normal
+    :param match_objects : dict {entity_type, value, index}
+        entity_type: name of type entity
+        value: value of entity
+        index: index of entity in sentence by type entity
+    :param text: str
+        input sentence
+    :return: str
+        text with entity name replace back to entity vlaue
     """
     clone_text = deepcopy(text)
     for obj in match_objects:
@@ -138,10 +172,23 @@ def convert_entity_in_sen_to_normal(text, match_objects):
 
 
 def create_item_id(text):
+    """
+    create hash id
+    :param text: input text
+    :return: str
+        hash unique id
+    """
     return hashlib.md5(str(text).encode('utf-8')).hexdigest()
 
 
 def get_domain(url):
+    """
+        Get url domain
+    :param url: str
+        https/http web domain
+    :return: str
+        domain in url
+    """
     res = re.findall(r'http[s]*?://([A-Za-z_0-9.-]+).*', url)
     if res:
         return res[0]
@@ -150,6 +197,13 @@ def get_domain(url):
 
 
 def gen_index_name_from_domain(domain):
+    """
+        Gen elastic search index by domain and date
+    :param domain: str
+        domain web
+    :return: str
+        name index
+    """
     today = date.today()
     today_date = today.strftime("%Y_%m_%d")
     return domain + "_" + str(today_date)

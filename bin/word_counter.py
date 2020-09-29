@@ -1,16 +1,24 @@
+import sys
+import os
 import time
 from os import path
 from collections import defaultdict
+import logging
+
+sys.path.append(os.path.dirname('../'))
 from constant.path import LOG_PATH
 from utils.logUtils import LogAction
 from utils.fileUtils import read_lines_text_file
 from utils.stringUtils import *
 from asset.punctuation_mark import PUNCTUATION_MARK
-import logging
 from argparse import ArgumentParser
 
 
 def main():
+    """
+    print Calculate frequency dictionary of word from text file
+    :return: None
+    """
     arg_parser = ArgumentParser('word_counter.py -p path -t type')
     arg_parser.add_argument('-p', '--path', default=None, help='Ban nho nhap duong dan tuyet doi cua file text ')
     arg_parser.add_argument('-t', '--type', default=None, help='Ban nho nhap loai sap xep [asc, desc] ')
@@ -36,6 +44,13 @@ class WordCounter:
             logging.disable(logging.INFO)
 
     def pre_process_before_count(self, document_lines):
+        """
+        Preprocessing text with encode entity and add extra space between punctuation mark in text
+        :param document_lines: list
+            List of string lines in text
+        :return: str
+            Normalize document
+        """
         start_time = time.time()
         normalize_lines = list()
         for line in document_lines:
@@ -51,6 +66,13 @@ class WordCounter:
         return normalize_document
 
     def word_count(self, document):
+        """
+        Calculation dictionary word frequency in text
+        :param document: str
+            Content input text
+        :return: dict
+            Dictionary with key is word and value is num of word in text
+        """
         start_time = time.time()
         dictionary = dict()
         counter = defaultdict(int)
@@ -64,8 +86,20 @@ class WordCounter:
         return dictionary
 
     def cal_word_frequency_in_doc(self, document_path, arrange_type="desc"):
-
-        document_lines = read_lines_text_file(document_path)
+        """
+        Get text from path and calculate frequency word dict
+        :param document_path:
+            Absolut input file path
+        :param arrange_type:
+            Value is asc or desc
+        :return: dict
+             dictionary word frequency if arrange_type valid
+             none if arrange_type not valid
+        """
+        try:
+            document_lines = read_lines_text_file(document_path)
+        except Exception:
+            raise FileNotFoundError("File not found")
         document = self.pre_process_before_count(document_lines)
 
         desc_dictionary = self.word_count(document)
@@ -80,3 +114,6 @@ class WordCounter:
             self.log.info("Not valid arrange type")
             return None
 
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,2 @@
+2020-09-28 22:06:08,992|INFO|               word_counter.py|                pre_process_before_count|  54| Duration pre process before count: 0.0030231475830078125
+2020-09-28 22:06:08,995|INFO|               word_counter.py|                              word_count|  67| Duration count dictionary: 0.001958608627319336
