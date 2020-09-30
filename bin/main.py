@@ -1,5 +1,6 @@
 import sys
 import os
+from os import path
 import configparser
 from flask import Flask, jsonify, request
 import re
@@ -9,13 +10,14 @@ from elasticsearch import Elasticsearch, ElasticsearchException, ConnectionError
 sys.path.append(os.path.dirname('../'))
 from utils.logUtils import LogAction
 from constant.constant import indices_pattern, news_fields
+from constant.path import LOG_PATH
 from utils.stringUtils import remove_extra_space, create_item_id, get_domain, gen_index_name_from_domain
 from utils.dateUtils import get_instance_time_iso_format
 from utils.elasticUtils import *
 
 config = configparser.RawConfigParser()
 config.read('config.properties')
-log = LogAction(__file__).init_log(path_folder_logs=config.get("Logger", "log_path"))
+log = LogAction(__file__).init_log(path_folder_logs=path.join(LOG_PATH, config.get("Logger", "log_path")))
 
 app = Flask(__name__)
 
