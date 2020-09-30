@@ -1,8 +1,8 @@
-#project link 
+# project link 
 
 - https://github.com/haidinhthanh/code_challenge.git
 
-#setup enviroment:
+# setup enviroment:
 
 1. linux:
 Run flow command:
@@ -32,17 +32,16 @@ Run flow command:
 
 1. task 1: word counter
 Run flow command:
-Count word from file
-    -   python3 bin/word_counter.py -p path -t type
-    * path: absolute file path *
-    * type: type sort asc|desc
-
-Test count word
-    -   python3 -m unittest bin/word_counter_test.py
+    * Count word from file
+        -   python3 bin/word_counter.py -p path -t type
+            - path: absolute file path 
+            - type: type sort asc|desc
     
-2. task 2:
+    * Test count word
+        -   python3 -m unittest bin/word_counter_test.py
+    
+2. task2:
     2.1 crawler news from vnexpress
-    
     * Setup elastic search:
     Run flow command:
         * start
@@ -52,14 +51,13 @@ Test count word
             -   ./bin/elasticsearch -d -p pid
         
         * kill:
-            -   pkill -F pid
-    
+            -   pkill -F pid    
     2.2 Crawl newspaper
-        Run flow command:
-            -   cd newspaper_crawl:
-            -   scrapy crawl vn_express_url_crawler
-            -   scrapy crawl vn_express_spider
-    
+    *Run flow command:
+        -   cd newspaper_crawl:
+        -   scrapy crawl vn_express_url_crawler
+        -   scrapy crawl vn_express_spider
+            
     2.2 flask server
         -  cd bin
         -  flask run
