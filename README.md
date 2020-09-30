@@ -43,7 +43,7 @@ Run flow command:
 2. task2:
     2.1 crawler news from vnexpress
     * Setup elastic search:
-    Run flow command:
+    * Run flow command:
         * start
             -   curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.2-linux-x86_64.tar.gz
             -   tar -xvf elasticsearch-7.9.2-linux-x86_64.tar.gz
@@ -52,14 +52,16 @@ Run flow command:
         
         * kill:
             -   pkill -F pid
+            
     2.2 Crawl newspaper
-    *Run flow command:
-        -   cd newspaper_crawl:
+    * Run flow command:
+        -   cd newspaper_crawl
         -   scrapy crawl vn_express_url_crawler
         -   scrapy crawl vn_express_spider
             
-    2.2 flask server
-        -  cd bin
-        -  flask run
+    2.3 flask server:
+    * Run flow command:
+        -   cd bin
+        -   flask run
     
     
