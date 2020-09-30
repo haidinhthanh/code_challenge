@@ -51,7 +51,7 @@ Run flow command:
             -   ./bin/elasticsearch -d -p pid
         
         * kill:
-            -   pkill -F pid    
+            -   pkill -F pid
     2.2 Crawl newspaper
     *Run flow command:
         -   cd newspaper_crawl:
