@@ -4,6 +4,7 @@ import configparser
 from flask import Flask, jsonify, request
 import re
 import dateutil.parser
+import time
 from elasticsearch import Elasticsearch, ElasticsearchException, ConnectionError, ConnectionTimeout, NotFoundError
 sys.path.append(os.path.dirname('../'))
 from utils.logUtils import LogAction
@@ -21,6 +22,7 @@ app = Flask(__name__)
 
 @app.route('/news/search', methods=['GET'])
 def search_news():
+    start_time = time.time()
     query = request.args.get('q')
     limit = request.args.get('limit')
     start = request.args.get('start')
@@ -79,11 +81,17 @@ def search_news():
             elif type_sort == "desc":
                 news_items.sort(key=lambda item: dateutil.parser.parse(item["_source"][sort_field]), reverse=True)
     else:
+        log.info("Duration search news with param q={q}, limit={limit}, start={start}, sort={sort} is {duration}".format(
+            q=query, limit=limit, start=start, sort=sort, duration=float(time.time() - start_time)
+        ))
         return jsonify({
             "errorCode": 1,
             "description": des,
             "news": []
         })
+    log.info("Duration search news with param q={q}, limit={limit}, start={start}, sort={sort} is {duration}".format(
+        q=query, limit=limit, start=start, sort=sort, duration=float(time.time() - start_time)
+    ))
     return jsonify({
         "errorCode": 0,
         "description": "success",
@@ -93,6 +101,7 @@ def search_news():
 
 @app.route('/news/<news_id>', methods=['PUT'])
 def update_news_by_id(news_id):
+    start_time = time.time()
     body = dict(request.json)
     flag_valid_params = True
     des = ""
@@ -133,17 +142,26 @@ def update_news_by_id(news_id):
                 continue
 
         if res and "error" in res.keys():
+            log.info("Duration update new with id = {news_id} is {duration}".format(
+                news_id=news_id, duration=float(time.time() - start_time)
+            ))
             return jsonify({
                 "errorCode": 1,
                 "description": "id not exist",
                 "result": res
             })
     else:
+        log.info("Duration update new with id = {news_id} is {duration}".format(
+            news_id=news_id, duration=float(time.time() - start_time)
+        ))
         return jsonify({
             "errorCode": 1,
             "description": des,
             "result": {}
         })
+    log.info("Duration update new with id = {news_id} is {duration}".format(
+        news_id=news_id, duration=float(time.time() - start_time)
+    ))
     return jsonify(
         {
             "errorCode": 0,
@@ -155,10 +173,12 @@ def update_news_by_id(news_id):
 
 @app.route('/news', methods=['POST'])
 def add_news_item():
+    start_time = time.time()
     body = dict(request.json)
     flag_valid_params = True
     des = ""
     flag_index_result = False
+    item = dict()
 
     if not body:
         flag_valid_params = False
@@ -186,7 +206,6 @@ def add_news_item():
             des += "param url is not url format; "
     if flag_valid_params:
         response = dict()
-        item = dict()
         for key, value in body.items():
             item[key] = value
         item_id = create_item_id(item["url"])
@@ -211,6 +230,9 @@ def add_news_item():
             log.info("fail index news data from {url}".format(url=item["url"]))
 
     else:
+        log.info("Duration create news fail is {duration}".format(
+            duration=float(time.time() - start_time)
+        ))
         return jsonify({
             "errorCode": 1,
             "description": des,
@@ -218,12 +240,18 @@ def add_news_item():
         })
 
     if flag_index_result:
+        log.info("Duration create news with id={id} is {duration}".format(
+            id=item_id, duration=float(time.time() - start_time)
+        ))
         return jsonify({
             "errorCode": 0,
             "description": "success",
             "result": response
         })
     else:
+        log.info("Duration create news fail is {duration}".format(
+            duration=float(time.time() - start_time)
+        ))
         return jsonify({
             "errorCode": 1,
             "description": "fail",
@@ -233,6 +261,7 @@ def add_news_item():
 
 @app.route('/news/<news_id>', methods=['DELETE'])
 def delete_news_by_id(news_id):
+    start_time = time.time()
     elastic = Elasticsearch(hosts=[config.get("Elasticsearch", "ELASTIC_SEARCH_SERVER")],
                             port=config.get("Elasticsearch", "ELASTIC_SEARCH_PORT"),
                             timeout=180)
@@ -249,11 +278,17 @@ def delete_news_by_id(news_id):
         if response and response["result"] == "deleted":
             break
     if not (response and response["result"] == "deleted"):
+        log.info("Duration delete news fail with {id} is {duration}".format(
+            id=news_id ,duration=float(time.time() - start_time)
+        ))
         return jsonify({
             "errorCode": 1,
             "description": "not found news id",
             "result": response
         })
+    log.info("Duration delete news with {id} is {duration}".format(
+        id=news_id, duration=float(time.time() - start_time)
+    ))
     return jsonify({
         "errorCode": 0,
         "description": "success",
